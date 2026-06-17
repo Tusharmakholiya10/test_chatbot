@@ -89,15 +89,32 @@ button:hover {
     margin: 15px;
 }
 
-.chip {
-    background: #f1f1f1;
+/* .chip {
+    background: #f1f1f19d;
     border: none;
     border-radius: 20px;
     padding: 10px 15px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s;   
 }
 
 .chip:hover {
     background: #dddddd;
+} */
+
+.chip-btn {
+    background-color: #f0f4f9; /* Soft light grey/blue base */
+    color: #0076fe;            /* Sharp blue text */
+    border: 1px solid #0076fe; /* Matching blue outline */
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chip-btn:hover {
+    background-color: #0076fe; /* Inverts on hover */
+    color: #ffffff;            /* Text turns white on hover */
 }
