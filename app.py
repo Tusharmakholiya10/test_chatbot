@@ -182,3 +182,18 @@ Assistant Response:
 if __name__ == "__main__":
     app.run(debug=True)
 
+from flask import Flask, render_template, jsonify
+
+app = Flask(__name__)
+
+# Essential for Vercel to find the app object
+app = app 
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# ... rest of your chatbot routes ...
+
+if __name__ == '__main__':
+    app.run(debug=True)
