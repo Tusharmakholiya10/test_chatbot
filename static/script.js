@@ -1,9 +1,10 @@
 async function sendMessage() {
+    document.getElementById("suggestions-container").style.display = "none";
     const input = document.getElementById("message");
     const chatBox = document.getElementById("chat-box");
 
     const message = input.value.trim();
-
+    
     if (!message) {
         return;
     }
@@ -82,3 +83,31 @@ document.getElementById("message")
         alert("Unable to clear chat.");
     }
 }
+
+async function loadSuggestions() {
+
+    const response = await fetch("/suggestions");
+    const suggestions = await response.json();
+
+    const container = document.getElementById("suggestions-container");
+
+    suggestions.forEach(text => {
+
+        const button = document.createElement("button");
+
+        button.className = "chip";
+
+        button.innerText = text;
+
+        button.onclick = () => {
+
+            document.getElementById("message").value = text;
+
+            sendMessage();
+        };
+
+        container.appendChild(button);
+    });
+}
+
+loadSuggestions();

@@ -81,3 +81,23 @@ button:hover {
 .clear-btn:hover {
     background: #f1f1f1;
 }
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px;
+}
+
+.chip {
+    background: #f1f1f1;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.chip:hover {
+    background: #dddddd;
+}
