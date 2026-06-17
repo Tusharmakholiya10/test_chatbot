@@ -3,10 +3,10 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
+# Load environment variables (Local fallback only)
 load_dotenv()
 
-# Get Gemini API key
+# Get Gemini API key directly from Vercel's Environment Settings
 api_key = os.getenv("GEMINI_API_KEY")
 
 # Configure Gemini
@@ -15,7 +15,11 @@ genai.configure(api_key=api_key)
 # Create Gemini model
 model = genai.GenerativeModel("gemini-2.5-flash")
 
+# Initialize Flask App
 app = Flask(__name__)
+
+# EXPLICITLY assign for Vercel serverless targeting 
+app = app 
 
 # Global chat history tracking
 chat_history = []
@@ -62,9 +66,7 @@ def suggestions():
 @app.route("/clear-history", methods=["POST"])
 def clear_history():
     global chat_history
-
     chat_history = []
-
     return jsonify({
         "message": "Conversation history cleared."
     })
@@ -93,10 +95,8 @@ def chat():
         # -----------------------------
         # Direct answers for LBS FAQs
         # -----------------------------
-
         if "course" in lower_message:
             print("COURSE CONDITION TRIGGERED")
-
             reply = (
                 "LBSTI currently offers:\n\n"
                 "• Diploma in Information Technology (1 year)\n"
@@ -105,29 +105,19 @@ def chat():
                 "The institute also offers multiple computer and technology skill development courses."
             )
 
-        elif any(word in lower_message for word in [
-    "contact",
-    "phone",
-    "mobile",
-    "number"
-]):
+        elif any(word in lower_message for word in ["contact", "phone", "mobile", "number"]):
             print("CONTACT CONDITION TRIGGERED")
-
             reply = (
-        "You can contact Lal Bahadur Shastri Training Institute "
-        "at +91 8273817564."
-    )
+                "You can contact Lal Bahadur Shastri Training Institute "
+                "at +91 8273817564."
+            )
 
         elif "email" in lower_message:
             reply = (
                 "You can reach the institute at: lbspth@gmail.com"
             )
 
-        elif any(word in lower_message for word in [
-            "address",
-            "location",
-            "where"
-        ]):
+        elif any(word in lower_message for word in ["address", "location", "where"]):
             reply = (
                 "Lal Bahadur Shastri Training Institute is located at:\n"
                 "Link Road, Opposite Pizza Slice,\n"
@@ -138,9 +128,7 @@ def chat():
             # -----------------------------
             # Gemini for all other queries
             # -----------------------------
-
             chat_history.append(f"User: {message}")
-
             conversation_context = "\n".join(chat_history[-6:])
 
             prompt = f"""
@@ -160,7 +148,6 @@ Instructions:
 
 Assistant Response:
 """
-
             response = model.generate_content(prompt)
             reply = response.text
 
@@ -173,27 +160,10 @@ Assistant Response:
 
     except Exception as e:
         print("Error:", e)
-
         return jsonify({
             "error": "Sorry, something went wrong. Please try again later."
         }), 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
-from flask import Flask, render_template, jsonify
-
-app = Flask(__name__)
-
-# Essential for Vercel to find the app object
-app = app 
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-# ... rest of your chatbot routes ...
-
-if __name__ == '__main__':
     app.run(debug=True)
