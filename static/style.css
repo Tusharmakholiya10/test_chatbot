@@ -118,3 +118,10 @@ button:hover {
     background-color: #0076fe; /* Inverts on hover */
     color: #ffffff;            /* Text turns white on hover */
 }
+
+#greeting {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 20px 0;
+}
