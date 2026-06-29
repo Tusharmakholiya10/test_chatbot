@@ -161,7 +161,7 @@ Assistant Response:
     except Exception as e:
         print("Error:", e)
         return jsonify({
-            "error": "Sorry, something went wrong. Please try again later."
+            "error": " For more Information Contact on this Number +91 8273817564 ."
         }), 500
 
 
