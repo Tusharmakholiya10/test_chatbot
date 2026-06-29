@@ -1,88 +1,277 @@
+/* ============================================================
+   LBS AI Assistant
+   script.js
+   PART 1
+============================================================ */
+
+const chatBox = document.getElementById("chat-box");
+const messageInput = document.getElementById("message");
+const sendBtn = document.getElementById("send-btn");
+const typingIndicator = document.getElementById("typing-indicator");
+const suggestionsContainer = document.getElementById("suggestions-container");
+
+/* ==========================================
+            AUTO SCROLL
+========================================== */
+
+function scrollToBottom() {
+
+    chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+/* ==========================================
+            CURRENT TIME
+========================================== */
+
+function getCurrentTime() {
+
+    return new Date().toLocaleTimeString([], {
+
+        hour: "2-digit",
+        minute: "2-digit"
+
+    });
+
+}
+
+/* ==========================================
+        SHOW / HIDE TYPING
+========================================== */
+
+function showTyping() {
+
+    typingIndicator.style.display = "flex";
+
+    scrollToBottom();
+
+}
+
+function hideTyping() {
+
+    typingIndicator.style.display = "none";
+
+}
+
+/* ==========================================
+        CREATE USER MESSAGE
+========================================== */
+
+function addUserMessage(text) {
+
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "user-message message";
+
+    wrapper.innerHTML = `
+
+        <div class="bubble">
+
+            <div class="sender">
+                You
+            </div>
+
+           <p>${escapeHTML(text)}</p>
+
+            <div class="message-time">
+
+                ${getCurrentTime()}
+
+            </div>
+
+        </div>
+
+        <div class="avatar user-avatar">
+
+            <i class="fa-solid fa-user"></i>
+
+        </div>
+
+    `;
+
+    chatBox.appendChild(wrapper);
+
+    scrollToBottom();
+
+}
+
+/* ==========================================
+        CREATE BOT MESSAGE
+========================================== */
+
+function addBotMessage(text) {
+
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "bot-message message";
+
+    wrapper.innerHTML = `
+
+        <div class="avatar bot-avatar">
+
+            <i class="fa-solid fa-robot"></i>
+
+        </div>
+
+        <div class="bubble">
+
+            <div class="sender">
+
+                AI Assistant
+
+            </div>
+
+           <p>${escapeHTML(text)}</p>
+
+            <div class="message-time">
+
+                ${getCurrentTime()}
+
+            </div>
+
+        </div>
+
+    `;
+
+    chatBox.appendChild(wrapper);
+
+    scrollToBottom();
+
+}
+
+/* ==========================================
+            DISABLE INPUT
+========================================== */
+
+function disableInput() {
+
+    sendBtn.disabled = true;
+
+    messageInput.disabled = true;
+
+}
+
+function enableInput() {
+
+    sendBtn.disabled = false;
+
+    messageInput.disabled = false;
+
+    messageInput.focus();
+
+}
+
+/* ==========================================
+            SEND MESSAGE
+========================================== */
+
 async function sendMessage() {
-    document.getElementById("suggestions-container").style.display = "none";
-    const input = document.getElementById("message");
-    const chatBox = document.getElementById("chat-box");
 
-    const message = input.value.trim();
-    
-    if (!message) {
-        return;
-    }
+    const message = messageInput.value.trim();
 
-    chatBox.innerHTML += `
-        <div class="user-message">
-            ${message}
-        </div>
-    `;
+    if (!message) return;
 
-    input.value = "";
+    suggestionsContainer.style.display = "none";
 
-    chatBox.innerHTML += `
-        <div class="bot-message" id="typing">
-            Bot is typing...
-        </div>
-    `;
+    addUserMessage(message);
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    messageInput.value = "";
+
+    disableInput();
+
+    showTyping();
 
     try {
+
         const response = await fetch("/chat", {
+
             method: "POST",
+
             headers: {
+
                 "Content-Type": "application/json"
+
             },
+
             body: JSON.stringify({
+
                 message: message
+
             })
+
         });
 
         const data = await response.json();
 
-        document.getElementById("typing").remove();
+        hideTyping();
 
-        chatBox.innerHTML += `
-            <div class="bot-message">
-                ${data.reply || data.error}
-            </div>
-        `;
+        addBotMessage(data.reply || data.error);
 
-    } catch (error) {
-
-        document.getElementById("typing").remove();
-
-        chatBox.innerHTML += `
-            <div class="bot-message">
-                Unable to connect to server.
-            </div>
-        `;
     }
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    catch (error) {
+
+        hideTyping();
+
+        addBotMessage(
+
+            "⚠️ Unable to connect to the server. Please try again."
+
+        );
+
+    }
+
+    enableInput();
+
+    scrollToBottom();
+
 }
 
-document.getElementById("message")
-    .addEventListener("keypress", function(e) {
+/* ============================================================
+   PART 2
+   Greeting • Suggestions • Clear Chat • Initialization
+============================================================ */
 
-        if (e.key === "Enter") {
-            sendMessage();
-        }
-    });
-    async function clearChat() {
+
+/* ==========================================
+            CLEAR CHAT
+========================================== */
+
+async function clearChat() {
+
     try {
+
         await fetch("/clear-history", {
+
             method: "POST"
+
         });
 
-        document.getElementById("chat-box").innerHTML = `
-            <div class="bot-message">
-                Chat cleared. How can I help you?
-            </div>
-        `;
+        chatBox.innerHTML = "";
 
-    } catch (error) {
-        alert("Unable to clear chat.");
+        addBotMessage(
+            "👋 Chat history cleared successfully. How may I assist you today?"
+        );
+
+        suggestionsContainer.style.display = "flex";
+
     }
+
+    catch (error) {
+
+        alert("Unable to clear chat.");
+
+    }
+
 }
+
+
+/* ==========================================
+            GREETING
+========================================== */
 
 function setGreeting() {
 
@@ -91,47 +280,204 @@ function setGreeting() {
     let greeting = "";
 
     if (hour >= 5 && hour < 12) {
+
         greeting = "🌅 Good Morning";
-    }
-    else if (hour >= 12 && hour < 17) {
-        greeting = "☀️ Good Afternoon";
-    }
-    else if (hour >= 17 && hour < 21) {
-        greeting = "🌆 Good Evening";
-    }
-    else {
-        greeting = "🌙 Good Night";
+
     }
 
-    document.getElementById("greeting").innerText = greeting + ",";
+    else if (hour >= 12 && hour < 17) {
+
+        greeting = "☀️ Good Afternoon";
+
+    }
+
+    else if (hour >= 17 && hour < 21) {
+
+        greeting = "🌆 Good Evening";
+
+    }
+
+    else {
+
+        greeting = "🌙 Good Night";
+
+    }
+
+    const greetingElement = document.getElementById("greeting");
+
+    if (greetingElement) {
+
+        greetingElement.textContent = greeting + " 👋";
+
+    }
+
 }
 
-setGreeting();
+
+/* ==========================================
+        CREATE SUGGESTION CHIP
+========================================== */
+
+function createSuggestionChip(text) {
+
+    const chip = document.createElement("button");
+
+    chip.className = "chip-btn";
+
+    chip.textContent = text;
+
+    chip.onclick = () => {
+
+        messageInput.value = text;
+
+        sendMessage();
+
+    };
+
+    return chip;
+
+}
+
+
+/* ==========================================
+        LOAD SUGGESTIONS
+========================================== */
 
 async function loadSuggestions() {
 
-    const response = await fetch("/suggestions");
-    const suggestions = await response.json();
+    try {
 
-    const container = document.getElementById("suggestions-container");
+        const response = await fetch("/suggestions");
 
-    suggestions.forEach(text => {
+        const suggestions = await response.json();
 
-        const button = document.createElement("button");
+        suggestionsContainer.innerHTML = "";
 
-        button.className = "chip";
+        suggestions.forEach((item) => {
 
-        button.innerText = text;
+            suggestionsContainer.appendChild(
 
-        button.onclick = () => {
+                createSuggestionChip(item)
 
-            document.getElementById("message").value = text;
+            );
 
-            sendMessage();
-        };
+        });
 
-        container.appendChild(button);
-    });
+    }
+
+    catch (error) {
+
+        console.log("Suggestions unavailable.");
+
+    }
+
 }
 
-loadSuggestions();
+
+/* ==========================================
+        ENTER KEY SUPPORT
+========================================== */
+
+messageInput.addEventListener("keydown", function(event){
+
+    if(event.key==="Enter"){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+});
+
+
+/* ==========================================
+            AUTO FOCUS
+========================================== */
+
+window.addEventListener("load",()=>{
+
+    messageInput.focus();
+
+});
+
+
+/* ==========================================
+        OPTIONAL ESC SHORTCUT
+========================================== */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+
+        messageInput.focus();
+
+    }
+
+});
+
+
+/* ==========================================
+        PREVENT DOUBLE CLICK
+========================================== */
+
+sendBtn.addEventListener("click",()=>{
+
+    if(!sendBtn.disabled){
+
+        sendMessage();
+
+    }
+
+});
+
+
+/* ==========================================
+            INITIALIZE
+========================================== */
+
+function initializeChatbot(){
+
+    setGreeting();
+
+    loadSuggestions();
+
+    hideTyping();
+
+    scrollToBottom();
+
+}
+
+initializeChatbot();
+
+
+/* ==========================================
+        OPTIONAL HELPERS
+========================================== */
+
+function showSuggestions(){
+
+    suggestionsContainer.style.display="flex";
+
+}
+
+function hideSuggestions(){
+
+    suggestionsContainer.style.display="none";
+
+}
+
+
+/* ==========================================
+        OPTIONAL MARKDOWN SUPPORT
+========================================== */
+
+function escapeHTML(text){
+
+    const div=document.createElement("div");
+
+    div.textContent=text;
+
+    return div.innerHTML;
+
+}
