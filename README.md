@@ -1,67 +1,124 @@
-# AI Chatbot Backend using Flask and Gemini
+# 🤖 LBS AI Chatbot
 
-## Features
+An AI-powered chatbot built for **Lal Bahadur Shastri Training Institute (LBSTI), Pithoragarh** using **Flask** and **Google Gemini API**.
 
-- Gemini AI Integration
-- Conversation History
-- Error Handling
-- Health Check Endpoint
-- Clear History Endpoint
+The chatbot answers institute-related questions such as courses, contact details, location, and also provides general AI responses using Gemini.
 
-## Installation
+---
+
+## 🚀 Features
+
+- AI-powered responses using Gemini API
+- Institute-specific answers
+- Conversation history
+- Suggestion chips for common questions
+- Responsive chatbot UI
+- Error handling
+- Deployed on Render
+
+---
+
+## 🛠️ Tech Stack
+
+- Python
+- Flask
+- HTML
+- CSS
+- JavaScript
+- Google Gemini API
+- Vercel
+
+---
+
+## 📂 Project Structure
+
+```
+lbs-chatbot/
+│── app.py
+│── requirements.txt
+│── .env.example
+│── templates/
+│    └── index.html
+│── static/
+│    ├── style.css
+│    └── script.js
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/lbs-chatbot.git
+cd lbs-chatbot
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+Activate it:
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / Mac
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Environment Variables
-
 Create a `.env` file:
 
 ```env
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-## Run the Server
+Run the application:
 
 ```bash
 python app.py
 ```
 
-## API Endpoints
+Open:
 
-### Health Check
+```
+http://127.0.0.1:5000
+```
 
-GET /health
+---
 
-Response:
+## 💬 Sample Questions
 
-{
-    "status": "ok"
-}
+- What courses are available?
+- What is the contact number?
+- Where is the institute located?
+- What is the email address?
+- How can I take admission?
 
-### Chat
+---
 
-POST /chat
+## 📸 Demo
 
-Request:
 
-{
-    "message": "Hello"
-}
+Live Demo: **(https://test-chatbot-odru.vercel.app/)**
 
-Response:
+---
 
-{
-    "reply": "Gemini response"
-}
+## 📜 License
 
-### Clear History
-
-POST /clear-history
-
-Response:
-
-{
-    "message": "Conversation history cleared."
-}
+This project was developed as an internship assessment project for learning and educational purposes.
