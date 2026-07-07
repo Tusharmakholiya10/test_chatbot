@@ -1,0 +1,52 @@
+{
+  "institution": {
+    "name": "Lal Bahadur Shastri Training Institute",
+    "short_name": "LBS Pithoragarh",
+    "tagline": "Empowering Youth through Industry-Relevant Skills",
+    "type": "Computer Training & Skill Development Institute",
+    "description": "LBS Pithoragarh is a premier computer training and skill development institute dedicated to bridging the gap between education and employment. The institute provides industry-oriented training, practical learning, career guidance, internships, and placement support through online and offline programs.",
+    "established": "2019",
+    "experience": "6+ Years",
+    "website": "https://www.lbspth.in",
+    "location": {
+      "city": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India"
+    },
+    "mode_of_learning": [
+      "Online",
+      "Offline"
+    ],
+    "student_strength": "2200+ Students Trained",
+    "placement_record": "40+ Placements in the Last Year",
+    "recognition": [
+      "UNDP SDG Achiever Award",
+      "State Recognition",
+      "National Recognition"
+    ],
+    "features": [
+      "Industry-Oriented Curriculum",
+      "Hands-on Practical Learning",
+      "Expert Trainers",
+      "Placement Support",
+      "Internship Support",
+      "Verified Certificates",
+      "Online Learning",
+      "Offline Learning",
+      "Career Guidance",
+      "Professional Development"
+    ],
+    "departments": [
+      "Programming",
+      "Cyber Security",
+      "Web Development",
+      "Graphic Design",
+      "UI/UX Design",
+      "Office Automation",
+      "Database Management",
+      "Computer Applications",
+      "Digital Skills",
+      "Data Analytics"
+    ]
+  }
+}

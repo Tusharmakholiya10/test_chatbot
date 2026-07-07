@@ -1,0 +1,177 @@
+{
+  "faculty": [
+    {
+      "id": 1,
+      "name": "Devendra Mahori",
+      "designation": "Founder & Lead Trainer",
+      "department": "Software Development & Skill Development",
+      "experience": "6+ Years",
+      "expertise": [
+        "Software Development",
+        "Web Development",
+        "Python",
+        "Career Mentorship",
+        "Skill Development",
+        "Programming"
+      ],
+      "courses": [
+        {
+          "course_id": 3,
+          "course_name": "Python Programming"
+        },
+        {
+          "course_id": 6,
+          "course_name": "Full Stack Development"
+        },
+        {
+          "course_id": 7,
+          "course_name": "Diploma in Information Technology"
+        },
+        {
+          "course_id": 2,
+          "course_name": "MERN Stack"
+        }
+      ],
+      "bio": "Founder of LBS Pithoragarh with extensive experience in software development, vocational education and career mentoring.",
+      "specialization": "Programming, Software Development & Career Guidance"
+    },
+    {
+      "id": 2,
+      "name": "Badal Kathayat",
+      "designation": "Cyber Security Trainer",
+      "department": "Cyber Security",
+      "experience": "Industry Professional",
+      "expertise": [
+        "Ethical Hacking",
+        "Penetration Testing",
+        "Network Security",
+        "Bug Bounty",
+        "Kali Linux",
+        "Web Security"
+      ],
+      "courses": [
+        {
+          "course_id": 1,
+          "course_name": "Executive Program in Ethical Hacking & Penetration Testing"
+        }
+      ],
+      "bio": "Cyber Security trainer specializing in ethical hacking and penetration testing with practical industry experience.",
+      "specialization": "Cyber Security"
+    },
+    {
+      "id": 3,
+      "name": "Kunal Bohra",
+      "designation": "Database & Spreadsheet Trainer",
+      "department": "Data Analytics",
+      "experience": "Professional Trainer",
+      "expertise": [
+        "Advanced Excel",
+        "Database",
+        "Microsoft Excel",
+        "Data Analysis",
+        "Reporting"
+      ],
+      "courses": [
+        {
+          "course_id": 21,
+          "course_name": "Certificate in Advanced Excel"
+        },
+        {
+          "course_id": 13,
+          "course_name": "Diploma in Data Analyst"
+        },
+        {
+          "course_id": 9,
+          "course_name": "Data Entry & Data Analytics"
+        }
+      ],
+      "bio": "Trainer specializing in Excel, databases and data analysis tools.",
+      "specialization": "Data Analytics"
+    },
+    {
+      "id": 4,
+      "name": "Priya",
+      "designation": "Office Automation Trainer",
+      "department": "Computer Applications",
+      "experience": "Professional Trainer",
+      "expertise": [
+        "MS Office",
+        "Computer Fundamentals",
+        "Office Automation",
+        "Computer Applications"
+      ],
+      "courses": [
+        {
+          "course_id": 7,
+          "course_name": "Diploma in Information Technology"
+        },
+        {
+          "course_id": 8,
+          "course_name": "Advance Diploma in Computer Applications"
+        }
+      ],
+      "bio": "Trainer focused on office productivity software and computer applications.",
+      "specialization": "Office Automation"
+    },
+    {
+      "id": 5,
+      "name": "Aman Kumar",
+      "designation": "Graphic Design Trainer",
+      "department": "Graphic Design",
+      "experience": "Creative Professional",
+      "expertise": [
+        "Adobe Photoshop",
+        "Illustrator",
+        "Graphic Design",
+        "Branding",
+        "Digital Media"
+      ],
+      "courses": [
+        {
+          "course_id": 17,
+          "course_name": "Certificate in Graphic Designing"
+        },
+        {
+          "course_id": 18,
+          "course_name": "Diploma in Graphic Designing"
+        },
+        {
+          "course_id": 19,
+          "course_name": "Graphic Designing"
+        }
+      ],
+      "bio": "Creative designer with expertise in branding and digital graphic design.",
+      "specialization": "Graphic Designing"
+    },
+    {
+      "id": 6,
+      "name": "Tansi Chuphal",
+      "designation": "Computer Applications Trainer",
+      "department": "Computer Education",
+      "experience": "Professional Trainer",
+      "expertise": [
+        "Computer Fundamentals",
+        "MS Office",
+        "Internet",
+        "Typing",
+        "Computer Applications"
+      ],
+      "courses": [
+        {
+          "course_id": 7,
+          "course_name": "Diploma in Information Technology"
+        },
+        {
+          "course_id": 8,
+          "course_name": "Advance Diploma in Computer Applications"
+        },
+        {
+          "course_id": 20,
+          "course_name": "Typing"
+        }
+      ],
+      "bio": "Trainer specializing in computer education and practical office skills.",
+      "specialization": "Computer Applications"
+    }
+  ]
+}

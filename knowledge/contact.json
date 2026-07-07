@@ -1,0 +1,68 @@
+{
+  "contact": {
+    "institution_name": "Lal Bahadur Shastri Training Institute",
+    "short_name": "LBS Pithoragarh",
+
+    "address": {
+      "street": "Link Road, Opposite Pizza Slice",
+      "city": "Pithoragarh",
+      "state": "Uttarakhand",
+      "postal_code": "262501",
+      "country": "India"
+    },
+
+    "phone": {
+      "primary": "+91 8273817564",
+      "admission": "+91 8273817564",
+      "student_support": "+91 8273817564"
+    },
+
+    "email": {
+      "primary": "lbspth@gmail.com",
+      "admissions": "lbspth@gmail.com",
+      "support": "lbspth@gmail.com"
+    },
+
+    "website": "https://www.lbspth.in",
+
+    "office_hours": {
+      "working_days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "timings": "7:00 AM - 7:00 PM",
+      "closed": [
+        "Sunday"
+      ]
+    },
+
+    "student_services": [
+      "Admission Counselling",
+      "Course Information",
+      "Career Guidance",
+      "Placement Support",
+      "Certificate Verification",
+      "Student Support"
+    ],
+
+    "important_links": {
+      "student_portal": "https://www.lbspth.in",
+      "certificate_verification": "https://www.lbspth.in",
+      "courses": "https://www.lbspth.in",
+      "contact_page": "https://www.lbspth.in"
+    },
+
+    "social_media": {
+      "facebook": "",
+      "instagram": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+
+    "support_message": "For admissions, course information, certificate verification or any other assistance, students can contact the institute during working hours."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "highlights": {
+    "statistics": {
+      "students_trained": {
+        "value": "2200+",
+        "description": "Students trained across various technology and professional courses."
+      },
+      "placements_last_year": {
+        "value": "40+",
+        "description": "Students successfully placed through institute support."
+      },
+      "years_of_excellence": {
+        "value": "6+",
+        "description": "Years of excellence in skill development and employability training."
+      }
+    },
+
+    "awards": [
+      {
+        "title": "UNDP SDG Achiever Award",
+        "description": "Recognized for outstanding contribution towards sustainable development and skill education."
+      },
+      {
+        "title": "State Recognition",
+        "description": "Recognized for contributions to skill development and employment generation."
+      },
+      {
+        "title": "National Recognition",
+        "description": "Appreciated for excellence in vocational and professional education."
+      }
+    ],
+
+    "features": [
+      {
+        "title": "Industry-Oriented Curriculum",
+        "description": "Courses are designed according to current industry requirements."
+      },
+      {
+        "title": "Internship Support",
+        "description": "Students receive internship guidance and opportunities."
+      },
+      {
+        "title": "Placement Assistance",
+        "description": "Career support including resume building, mock interviews, and placement guidance."
+      },
+      {
+        "title": "Online & Offline Learning",
+        "description": "Flexible learning options to suit students from different locations."
+      },
+      {
+        "title": "Hands-on Practical Training",
+        "description": "Learning through live projects, practical labs, and real-world assignments."
+      },
+      {
+        "title": "Expert Trainers",
+        "description": "Courses are taught by experienced industry professionals."
+      },
+      {
+        "title": "Verified Certification",
+        "description": "Students receive certificates that can be verified through the institute."
+      },
+      {
+        "title": "Career Guidance",
+        "description": "Professional mentoring to help students prepare for jobs and career growth."
+      }
+    ],
+
+    "student_benefits": [
+      "Industry-relevant curriculum",
+      "Live projects",
+      "Practical lab sessions",
+      "Career counseling",
+      "Resume preparation",
+      "Mock interviews",
+      "Internship opportunities",
+      "Placement support",
+      "Verified certificates",
+      "Experienced faculty",
+      "Flexible online learning",
+      "Offline classroom training"
+    ]
+  }
+}

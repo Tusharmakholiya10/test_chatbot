@@ -1,0 +1,41 @@
+{
+  "branches": [
+    {
+      "id": 1,
+      "name": "LBS Pithoragarh - Main Campus",
+      "type": "Head Office",
+      "city": "Pithoragarh",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "address": "Link Road, Opposite Pizza Slice, Pithoragarh, Uttarakhand - 262501",
+      "pincode": "262501",
+      "mode": ["Offline Classes", "Counselling", "Admissions", "Student Support"],
+      "working_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "working_hours": "7:00 AM - 7:00 PM",
+      "facilities": [
+        "Computer Labs",
+        "Smart Classrooms",
+        "Practical Training",
+        "Career Counselling",
+        "Student Support",
+        "Certificate Verification"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "LBS Bin Branch",
+      "type": "Training Centre",
+      "city": "Bin",
+      "district": "Pithoragarh",
+      "state": "Uttarakhand",
+      "country": "India",
+      "address": null,
+      "pincode": null,
+      "mode": ["Offline Classes", "Admissions", "Counselling"],
+      "working_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "working_hours": "7:00 AM - 7:00 PM",
+      "facilities": ["Computer Lab", "Practical Sessions", "Student Support"]
+    }
+  ]
+}

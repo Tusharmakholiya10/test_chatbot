@@ -1,0 +1,42 @@
+{
+  "about": {
+    "title": "About LBS Pithoragarh",
+    "overview": "LBS Pithoragarh is a leading skill development and employability-focused training institute committed to bridging the gap between education and employment across Uttarakhand and beyond.",
+    "legacy": {
+      "description": "Over the years, the institute has successfully trained thousands of students in Information Technology, Data Analytics, Digital Skills, Accounting, Professional Development, and other career-oriented programs.",
+      "students_trained": "2200+",
+      "experience": "6+ Years",
+      "focus": [
+        "Information Technology",
+        "Programming",
+        "Cyber Security",
+        "Data Analytics",
+        "Accounting",
+        "Graphic Design",
+        "Professional Development"
+      ]
+    },
+    "vision": "To become Uttarakhand's most trusted employability and skill development institute by empowering learners with knowledge, practical skills, and career opportunities.",
+    "mission": "To provide accessible, high-quality, industry-relevant education that enables students to become professionally successful while contributing to sustainable community development.",
+    "values": [
+      "Quality Education",
+      "Practical Learning",
+      "Career Readiness",
+      "Innovation",
+      "Skill Development",
+      "Student Success",
+      "Continuous Learning",
+      "Professional Ethics"
+    ],
+    "teaching_methodology": [
+      "Hands-on Projects",
+      "Practical Labs",
+      "Industry-Oriented Curriculum",
+      "Assignments",
+      "Mock Interviews",
+      "Career Mentorship",
+      "Live Demonstrations",
+      "Real-world Case Studies"
+    ]
+  }
+}

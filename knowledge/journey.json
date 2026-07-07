@@ -1,0 +1,80 @@
+{
+  "student_journey": [
+    {
+      "step": 1,
+      "title": "Inquiry",
+      "description": "Students can contact the institute by visiting the campus, calling the institute, emailing, or submitting an inquiry through the official website."
+    },
+    {
+      "step": 2,
+      "title": "Career Counselling",
+      "description": "Students receive guidance to select the most suitable course based on their educational background, interests, and career goals."
+    },
+    {
+      "step": 3,
+      "title": "Course Selection",
+      "description": "Students choose a course from various categories including IT, Software Development, Data Analytics, Accounting, Graphic Designing, Cyber Security, and Professional Skill Development."
+    },
+    {
+      "step": 4,
+      "title": "Admission",
+      "description": "Complete the admission process by submitting the required documents and paying the applicable course fee."
+    },
+    {
+      "step": 5,
+      "title": "Training Begins",
+      "description": "Students attend instructor-led classroom or online sessions with practical demonstrations and assignments."
+    },
+    {
+      "step": 6,
+      "title": "Practical Learning",
+      "description": "Students work on hands-on projects, coding exercises, laboratory sessions, assignments, and real-world case studies."
+    },
+    {
+      "step": 7,
+      "title": "Assessment",
+      "description": "Knowledge is evaluated through practical tests, assignments, projects, quizzes, and instructor assessments."
+    },
+    {
+      "step": 8,
+      "title": "Certification",
+      "description": "After successfully completing the course requirements, eligible students receive a course completion certificate."
+    },
+    {
+      "step": 9,
+      "title": "Placement Assistance",
+      "description": "The institute provides career guidance, resume building, interview preparation, and placement support wherever applicable."
+    },
+    {
+      "step": 10,
+      "title": "Career Growth",
+      "description": "Students can continue learning through advanced courses, skill upgrades, and professional development programs."
+    }
+  ],
+
+  "admission_requirements": {
+    "documents": [
+      "Passport-size photographs",
+      "Identity proof",
+      "Address proof",
+      "Educational qualification documents"
+    ],
+    "mode": [
+      "Offline Admission",
+      "Online Inquiry"
+    ]
+  },
+
+  "placement_services": [
+    "Career Counselling",
+    "Resume Preparation",
+    "Interview Guidance",
+    "Skill Development",
+    "Placement Assistance"
+  ],
+
+  "certificate": {
+    "provided": true,
+    "description": "Course completion certificates are provided for eligible courses after successful completion of training requirements."
+  }
+}

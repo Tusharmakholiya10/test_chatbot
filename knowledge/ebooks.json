@@ -1,0 +1,111 @@
+{
+  "ebooks": [
+    {
+      "id": 1,
+      "title": "Python Programming",
+      "category": "Programming",
+      "level": "Beginner",
+      "language": "English",
+      "format": "PDF",
+      "description": "Covers Python fundamentals including variables, loops, functions, object-oriented programming, file handling and projects.",
+      "related_courses": [
+        "Certificate in Python",
+        "Advance Diploma in Python",
+        "Certificate in Data Analysis with Python"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Advanced Excel",
+      "category": "Data Analytics",
+      "level": "Intermediate",
+      "language": "English",
+      "format": "PDF",
+      "description": "Includes formulas, functions, Pivot Tables, charts, dashboards and Power Query.",
+      "related_courses": [
+        "Certificate in Advanced Excel",
+        "Diploma in Data Analyst"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Graphic Designing",
+      "category": "Design",
+      "level": "Beginner",
+      "language": "English",
+      "format": "PDF",
+      "description": "Learn Adobe Photoshop, Illustrator, typography, branding and practical design concepts.",
+      "related_courses": [
+        "Certificate in Graphic Designing",
+        "Diploma in Graphic Designing"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Tally Prime with GST",
+      "category": "Accounting",
+      "level": "Beginner",
+      "language": "English",
+      "format": "PDF",
+      "description": "Complete guide to Tally Prime, GST, accounting entries, inventory and payroll.",
+      "related_courses": [
+        "Certificate in Tally Prime",
+        "Diploma in Financial Accounting",
+        "Tally & GST"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Full Stack Development",
+      "category": "Web Development",
+      "level": "Intermediate",
+      "language": "English",
+      "format": "PDF",
+      "description": "Covers HTML, CSS, JavaScript, React, Node.js, Express.js and MongoDB.",
+      "related_courses": [
+        "Full Stack Development",
+        "Professional Diploma in MERN Stack Software Engineering"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Ethical Hacking",
+      "category": "Cyber Security",
+      "level": "Intermediate",
+      "language": "English",
+      "format": "PDF",
+      "description": "Introduction to ethical hacking, penetration testing, Kali Linux and cybersecurity concepts.",
+      "related_courses": [
+        "Executive Program in Ethical Hacking & Penetration Testing"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Data Analytics with Python",
+      "category": "Data Analytics",
+      "level": "Intermediate",
+      "language": "English",
+      "format": "PDF",
+      "description": "Covers NumPy, Pandas, Matplotlib and real-world data analysis techniques.",
+      "related_courses": [
+        "Certificate in Data Analysis with Python",
+        "Diploma in Data Analyst"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Computer Fundamentals",
+      "category": "Computer Basics",
+      "level": "Beginner",
+      "language": "English",
+      "format": "PDF",
+      "description": "Basic computer concepts, Windows, internet, MS Office and digital literacy.",
+      "related_courses": [
+        "Diploma in Information Technology",
+        "Advance Diploma in Computer Applications"
+      ]
+    }
+  ],
+
+  "notes": "Study material and eBooks may be provided depending on the course. Students can contact the institute for the latest availability."
+}
