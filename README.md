@@ -52,12 +52,11 @@ lbs-chatbot/
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/lbs-chatbot.git
+git clone https://github.com/Tusharmakholiya10/lbs-chatbot.git
 cd lbs-chatbot
 ```
 
 Create a virtual environment:
-
 ```bash
 python -m venv venv
 ```

@@ -8,7 +8,8 @@ load_dotenv()
 
 # Get Gemini API key directly from Vercel's Environment Settings
 api_key = os.getenv("GEMINI_API_KEY")
-
+print("API Key:", os.getenv("GEMINI_API_KEY"))
+print("Configured API Key:", api_key)
 # Configure Gemini
 genai.configure(api_key=api_key)
 
@@ -167,3 +168,5 @@ Assistant Response:
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
