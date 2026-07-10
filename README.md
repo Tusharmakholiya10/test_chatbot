@@ -14,7 +14,7 @@ The chatbot answers institute-related questions such as courses, contact details
 - Suggestion chips for common questions
 - Responsive chatbot UI
 - Error handling
-- Deployed on Render
+- Deployed on Versel
 
 ---
 
