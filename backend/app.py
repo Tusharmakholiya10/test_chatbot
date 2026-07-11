@@ -8,7 +8,7 @@ from backend.utils.query_router import query_router
 from backend.utils.knowledge_search import knowledge_search
 from backend.utils.context_builder import context_builder
 from backend.utils.knowledge_loader import knowledge_loader
-
+from backend.utils.prompt_builder import prompt_builder
 # ============================================================
 # Configure Logging
 # ============================================================
