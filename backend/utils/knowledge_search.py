@@ -1,75 +1,157 @@
 import re
-from difflib import SequenceMatcher
 from utils.knowledge_loader import knowledge_loader
 
 
 class KnowledgeSearch:
 
     def __init__(self):
-        self.knowledge = knowledge_loader.get()
+        self.loader = knowledge_loader
 
-    def clean(self, text):
-        return re.sub(r'[^a-zA-Z0-9 ]', '', str(text).lower())
+        # Importance of different fields
+        self.field_weights = {
+            "name": 100,
+            "title": 100,
+            "short_name": 80,
+            "category": 60,
+            "skills": 50,
+            "technologies": 50,
+            "topics": 50,
+            "description": 25,
+            "career_opportunities": 20,
+            "duration": 15,
+            "mode": 15,
+            "certificate": 10,
+            "placement_support": 10
+        }
 
-    def similarity(self, a, b):
-        return SequenceMatcher(None, a, b).ratio()
+    # ---------------------------------------------------
 
-    def search(self, query, threshold=0.45):
+    def tokenize(self, text):
 
-        query = self.clean(query)
+        text = str(text).lower()
+        text = re.sub(r"[^a-z0-9 ]", " ", text)
 
-        results = []
+        return set(text.split())
 
-        for section, data in self.knowledge.items():
+    # ---------------------------------------------------
 
-            if isinstance(data, list):
+    def field_score(self, query_tokens, value, weight):
 
-                for item in data:
+        if value is None:
+            return 0
 
-                    score = self.score_item(query, item)
+        if isinstance(value, list):
+            value = " ".join(map(str, value))
 
-                    if score >= threshold:
+        tokens = self.tokenize(value)
 
-                        results.append({
-                            "section": section,
-                            "score": score,
-                            "data": item
-                        })
+        overlap = query_tokens & tokens
 
-            elif isinstance(data, dict):
+        return len(overlap) * weight
 
-                score = self.score_item(query, data)
+    # ---------------------------------------------------
 
-                if score >= threshold:
-
-                    results.append({
-                        "section": section,
-                        "score": score,
-                        "data": data
-                    })
-
-        results.sort(key=lambda x: x["score"], reverse=True)
-
-        return results[:5]
-
-    def score_item(self, query, item):
+    def score_record(self, query, record, category):
 
         score = 0
 
-        for value in item.values():
+        query_tokens = self.tokenize(query)
 
-            if isinstance(value, list):
+        # -------------------------
+        # TITLE BONUS
+        # -------------------------
 
-                for v in value:
-                    s = self.similarity(query, self.clean(v))
-                    score = max(score, s)
+        title_tokens = self.tokenize(record["title"])
 
-            else:
+        overlap = query_tokens & title_tokens
 
-                s = self.similarity(query, self.clean(value))
-                score = max(score, s)
+        score += len(overlap) * 120
+
+        # -------------------------
+        # FIELD BONUS
+        # -------------------------
+
+        fields = record["fields"]
+
+        if isinstance(fields, dict):
+
+            for field, weight in self.field_weights.items():
+
+                if field in fields:
+
+                    score += self.field_score(
+                        query_tokens,
+                        fields[field],
+                        weight
+                    )
+
+        # -------------------------
+        # CONTENT BONUS
+        # -------------------------
+
+        text_tokens = self.tokenize(record["normalized_text"])
+
+        overlap = query_tokens & text_tokens
+
+        score += len(overlap) * 10
+
+        # -------------------------
+        # EXACT PHRASE
+        # -------------------------
+
+        if query.lower() in record["normalized_text"]:
+            score += 40
+
+        # -------------------------
+        # SECTION BONUS
+        # -------------------------
+
+        if category != "general":
+
+            if record["section"] == category:
+                score += 30
 
         return score
+
+    # ---------------------------------------------------
+
+    def search(self, query, category="general", top_k=5):
+
+        if category == "general":
+            records = self.loader.get_records()
+        else:
+            records = self.loader.get_section(category)
+
+        scored = []
+
+        for record in records:
+
+            score = self.score_record(query, record, category)
+
+            if score > 0:
+                scored.append((score, record))
+
+        scored.sort(key=lambda x: x[0], reverse=True)
+
+        if not scored:
+            return []
+
+        # ----------------------------
+        # Remove weak matches
+        # ----------------------------
+
+        best_score = scored[0][0]
+
+        threshold = best_score * 0.40
+
+        filtered = []
+
+        for score, record in scored:
+
+            if score >= threshold:
+                filtered.append(record)
+
+        return filtered[:top_k]
 
 
 knowledge_search = KnowledgeSearch()

@@ -5,119 +5,167 @@ class QueryRouter:
 
     def __init__(self):
 
-        self.intent_keywords = {
+        self.categories = {
+
+            "about": [
+                "about",
+                "institute",
+                "history",
+                "vision",
+                "mission",
+                "organization",
+                "lbs"
+            ],
 
             "courses": [
                 "course",
                 "courses",
                 "python",
-                "tally",
                 "excel",
+                "advanced excel",
+                "tally",
+                "gst",
                 "graphic",
                 "design",
-                "data analyst",
+                "photoshop",
+                "web",
                 "full stack",
-                "adca",
-                "dit",
-                "personality",
-                "typing",
-                "nursery",
-                "ai",
-                "development",
-                "program"
-            ],
-
-            "faculty": [
-                "teacher",
-                "faculty",
-                "trainer",
-                "mentor",
-                "devendra",
-                "mahori",
-                "kunal",
-                "aman",
-                "priya",
-                "tansi"
+                "mern",
+                "react",
+                "artificial intelligence",
+                "machine learning",
+                "data analytics",
+                "certificate",
+                "diploma",
+                "duration",
+                "fee",
+                "fees",
+                "cost",
+                "price",
+                "eligibility"
             ],
 
             "contact": [
+                "contact",
                 "phone",
                 "mobile",
-                "contact",
                 "email",
-                "call",
                 "address",
-                "location"
+                "location",
+                "office",
+                "call",
+                "reach"
+            ],
+
+            "faculty": [
+                "faculty",
+                "teacher",
+                "trainer",
+                "mentor",
+                "staff",
+                "instructor"
             ],
 
             "branches": [
                 "branch",
                 "branches",
-                "bin",
-                "pithoragarh",
+                "campus",
+                "centre",
                 "center"
             ],
 
             "journey": [
                 "admission",
+                "apply",
+                "registration",
                 "register",
-                "enroll",
-                "join",
-                "steps",
-                "procedure"
+                "documents",
+                "process",
+                "placement",
+                "certificate verification"
             ],
 
             "ebooks": [
                 "ebook",
+                "ebook",
                 "book",
-                "pdf",
+                "books",
+                "study material",
                 "notes"
             ],
 
             "highlights": [
-                "award",
                 "achievement",
-                "recognition",
-                "placement",
-                "impact"
-            ],
-
-            "about": [
-                "about",
-                "vision",
-                "mission",
-                "history",
-                "legacy",
-                "institute"
+                "highlight",
+                "success",
+                "placement record"
             ]
+
         }
+        
+
+    def clean(self, query):
+
+        query = query.lower()
+
+        query = re.sub(r'[^a-z0-9 ]', ' ', query)
+
+        query = re.sub(r'\s+', ' ', query)
+
+        return query.strip()
 
     def detect(self, query):
-        """
-        Detect which knowledge category the user's query belongs to.
-        Returns the most relevant category.
-        """
 
-        query = re.sub(r'[^a-zA-Z0-9 ]', '', query.lower())
+        query = self.clean(query)
+        query_words = set(query.split())
 
         scores = {}
+        matched = {}
 
-        for category, keywords in self.intent_keywords.items():
+        for category, keywords in self.categories.items():
 
-            scores[category] = 0
+            score = 0
+            found = []
 
             for keyword in keywords:
 
-                if keyword in query:
-                    scores[category] += 1
+                keyword = self.clean(keyword)
+
+                # Multi-word phrase
+                if " " in keyword:
+                    if keyword in query:
+                        score += 2
+                        found.append(keyword)
+
+                # Single word
+                else:
+                    if keyword in query_words:
+                        score += 1
+                        found.append(keyword)
+
+            scores[category] = score
+            matched[category] = found
 
         best_category = max(scores, key=scores.get)
 
         if scores[best_category] == 0:
-            return "general"
 
-        return best_category
+            return {
+                "category": "general",
+                "confidence": 0.0,
+                "matched_keywords": []
+            }
+
+        confidence = round(
+            scores[best_category] / max(scores.values()),
+            2
+        )
+
+        return {
+            "category": best_category,
+            "confidence": confidence,
+            "matched_keywords": matched[best_category]
+        }
 
 
-# Global instance
 query_router = QueryRouter()

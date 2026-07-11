@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
-
+import traceback
+from collections import deque
+from utils.prompt_builder import prompt_builder
 from utils.query_router import query_router
 from utils.knowledge_search import knowledge_search
 from utils.context_builder import context_builder
@@ -35,10 +37,10 @@ app = app
 
 
 # ============================================================
-# Global Chat History
+# Global Chat History (Automated max length of 10 items)
 # ============================================================
 
-chat_history = []
+chat_history = deque(maxlen=10)
 
 
 # ============================================================
@@ -129,103 +131,100 @@ def chat():
 
         print("=" * 60)
         print("User:", message)
-                # ============================================================
-        # Route the query
+        
+        # ============================================================
+        # Route the query & Search Knowledge Base (With Second Chance Fallback)
         # ============================================================
 
-        category = query_router.detect(message)
+        route = query_router.detect(message)
+        
+        category = route["category"]
+        confidence = route["confidence"]
+        matched_keywords = route["matched_keywords"]
 
-        print("Detected Category:", category)
+        print("=" * 80)
+        print("CATEGORY :", category)
+        print("CONFIDENCE :", confidence)
+        print("MATCHED :", matched_keywords)
+        print("=" * 80)
+
+        search_results = knowledge_search.search(
+            query=message,
+            category=category
+        )
+        
+        # Second Chance: If nothing useful is found, search everywhere (general)
+        if not search_results and category != "general":
+            search_results = knowledge_search.search(
+                query=message,
+                category="general"
+            )
+
+        # Empty search mitigation
+        if not search_results:
+            return jsonify({
+                "reply":
+                (
+                    "I couldn't find information related to your question "
+                    "in the LBS knowledge base.\n\n"
+                    "You can ask me about:\n"
+                    "• Courses\n"
+                    "• Admissions\n"
+                    "• Faculty\n"
+                    "• Branches\n"
+                    "• Contact details\n"
+                    "• Placement support\n"
+                    "• Institute information"
+                )
+            })
 
         # ============================================================
-        # Search Knowledge Base
+        # Cleaned Debug Logs
         # ============================================================
 
-        search_results = knowledge_search.search(message)
+        print("=" * 80)
+        print("RESULTS  :", len(search_results))
 
-        print("Search Results Found:", len(search_results))
+        for r in search_results:
+            print(f"{r['section']} -> {r['title']}")
+
+        print("=" * 80)
 
         # ============================================================
         # Build Context
         # ============================================================
-
+      
         context = context_builder.build(search_results)
 
         # ============================================================
-        # Store User Message
+        # Store User Message & Setup Window
         # ============================================================
 
         chat_history.append(f"User: {message}")
-
-        # Keep only last 10 messages
-        if len(chat_history) > 10:
-            chat_history = chat_history[-10:]
-
-        conversation_context = "\n".join(chat_history)
+        
+        # Creates history string out of the last 6 operations inside deque
+        current_history_list = list(chat_history)
+        conversation = "\n".join(current_history_list[-6:])
 
         # ============================================================
-        # Prompt for Gemini
+        # Prompt Construction & Gemini Generation
         # ============================================================
 
-        prompt = f"""
-You are the official AI Assistant of Lal Bahadur Shastri Training Institute (LBSTI), Pithoragarh.
+        prompt = prompt_builder.build(
+            question=message,
+            context=context,
+            conversation=conversation
+        )
 
-You help students with institute-related questions.
-
-==========================================================
-RELEVANT KNOWLEDGE
-==========================================================
-
-{context}
-
-==========================================================
-PREVIOUS CONVERSATION
-==========================================================
-
-{conversation_context}
-
-==========================================================
-CURRENT USER QUESTION
-==========================================================
-
-{message}
-
-==========================================================
-RULES
-==========================================================
-
-1. Answer institute-related questions ONLY using the knowledge provided above.
-
-2. If the requested institute information is missing from the knowledge base,
-reply politely:
-
-"I couldn't find that information in the institute knowledge base. Please contact the institute for further assistance."
-
-3. If the user's question is NOT related to LBSTI, answer normally using your general knowledge.
-
-4. Never invent institute information.
-
-5. Keep answers clear, professional and concise.
-
-Assistant:
-"""
-
-        # ============================================================
-        # Gemini Response
-        # ============================================================
-
-        response = model.generate_content(prompt)
-
+        options = genai.types.GenerationConfig(temperature=0.7)
+        response = model.generate_content(prompt, generation_config=options)
         reply = response.text.strip()
 
         # ============================================================
-        # Save Assistant Reply
+        # Save Assistant Reply (Deque manages the max size of 10)
         # ============================================================
 
         chat_history.append(f"Assistant: {reply}")
-
-        if len(chat_history) > 10:
-            chat_history = chat_history[-10:]
 
         print("=" * 60)
         print("Assistant:", reply)
@@ -234,11 +233,15 @@ Assistant:
         return jsonify({
             "reply": reply
         })
+        
     except Exception as e:
 
+        # ============================================================
+        # Enhanced Error Logging via Traceback
+        # ============================================================
         print("=" * 60)
         print("ERROR OCCURRED")
-        print(e)
+        traceback.print_exc()
         print("=" * 60)
 
         return jsonify({

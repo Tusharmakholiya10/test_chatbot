@@ -1,39 +1,90 @@
-import json
-
-
 class ContextBuilder:
 
-    def build(self, search_results):
-        """
-        Converts search results into readable context
-        that Gemini can understand.
-        """
+    def __init__(self):
+        pass
 
-        if not search_results:
-            return "No relevant institute information was found."
+    # ---------------------------------------------
+
+    def format_value(self, value):
+
+        if value is None:
+            return "N/A"
+
+        if isinstance(value, bool):
+            return "Yes" if value else "No"
+
+        if isinstance(value, list):
+
+            if len(value) == 0:
+                return "N/A"
+
+            return "\n".join(f"• {v}" for v in value)
+
+        if isinstance(value, dict):
+
+            lines = []
+
+            for k, v in value.items():
+                lines.append(f"{k.replace('_',' ').title()}: {v}")
+
+            return "\n".join(lines)
+
+        return str(value)
+
+    # ---------------------------------------------
+
+    def build_record(self, record):
+
+        lines = []
+
+        lines.append(f"===== {record['section'].upper()} =====")
+
+        lines.append("")
+
+        lines.append(f"Title: {record['title']}")
+
+        lines.append("")
+
+        fields = record["fields"]
+
+        if isinstance(fields, dict):
+
+            SKIP_FIELDS = {
+                "id",
+                "slug",
+                "keywords",
+                "search_keywords"
+            }
+
+            for key, value in fields.items():
+
+                if key in SKIP_FIELDS:
+                    continue
+
+                key = key.replace("_", " ").title()
+
+                lines.append(f"{key}:")
+
+                lines.append(self.format_value(value))
+
+                lines.append("")
+
+        return "\n".join(lines)
+
+    # ---------------------------------------------
+
+    def build(self, records):
+
+        if not records:
+            return "No relevant knowledge found."
 
         context = []
 
-        for result in search_results:
+        for record in records:
 
-            section = result.get("section", "").upper()
-            data = result.get("data", {})
+            context.append(self.build_record(record))
 
-            context.append(f"\n===== {section} =====")
-
-            if isinstance(data, dict):
-
-                for key, value in data.items():
-
-                    if isinstance(value, list):
-                        value = ", ".join(str(v) for v in value)
-
-                    context.append(f"{key}: {value}")
-
-            else:
-                context.append(str(data))
-
-        return "\n".join(context)
+        return "\n\n".join(context)
 
 
 context_builder = ContextBuilder()

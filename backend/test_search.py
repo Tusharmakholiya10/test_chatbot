@@ -1,31 +1,38 @@
-# backend/test_search.py
-
 from utils.knowledge_search import knowledge_search
 
-queries = [
+questions = [
 
-    "python",
+    ("Python course", "courses"),
 
-    "graphic",
+    ("Graphic Designing", "courses"),
 
-    "founder",
+    ("MERN Stack", "courses"),
 
-    "placement",
+    ("Contact Number", "contact"),
 
-    "office",
+    ("Placement", "journey"),
 
-    "data analyst"
+    ("Branch", "branches"),
+
+    ("Faculty", "faculty"),
+
+    ("About LBS", "about"),
+
+    ("Data Analytics", "general")
 
 ]
 
-for q in queries:
+for q, section in questions:
 
-    print("="*50)
+    print("\n" + "="*70)
 
-    print("Query:", q)
+    print("QUESTION :", q)
 
-    result = knowledge_search.search(q)
+    results = knowledge_search.search(q, section)
 
-    for r in result:
+    for r in results:
 
-        print(r["section"], round(r["score"],2))
+        print()
+
+        print("SECTION :", r["section"])
+        print("TITLE   :", r["title"])
