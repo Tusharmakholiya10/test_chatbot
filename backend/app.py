@@ -2,13 +2,22 @@ from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
-import traceback
+import logging
 from collections import deque
 from utils.prompt_builder import prompt_builder
 from utils.query_router import query_router
 from utils.knowledge_search import knowledge_search
 from utils.context_builder import context_builder
 
+# ============================================================
+# Configure Logging
+# ============================================================
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 
 # ============================================================
 # Load Environment Variables
@@ -128,10 +137,6 @@ def chat():
         }), 400
 
     try:
-
-        print("=" * 60)
-        print("User:", message)
-        
         # ============================================================
         # Route the query & Search Knowledge Base (With Second Chance Fallback)
         # ============================================================
@@ -141,12 +146,6 @@ def chat():
         category = route["category"]
         confidence = route["confidence"]
         matched_keywords = route["matched_keywords"]
-
-        print("=" * 80)
-        print("CATEGORY :", category)
-        print("CONFIDENCE :", confidence)
-        print("MATCHED :", matched_keywords)
-        print("=" * 80)
 
         search_results = knowledge_search.search(
             query=message,
@@ -179,16 +178,13 @@ def chat():
             })
 
         # ============================================================
-        # Cleaned Debug Logs
+        # Cleaned Debug Logs (Step 3 Replacement)
         # ============================================================
-
-        print("=" * 80)
-        print("RESULTS  :", len(search_results))
+        logger.info(f"Category: {category}")
+        logger.info(f"Search Results: {len(search_results)}")
 
         for r in search_results:
-            print(f"{r['section']} -> {r['title']}")
-
-        print("=" * 80)
+            logger.info(f"Section={r['section']} | Title={r['title']}")
 
         # ============================================================
         # Build Context
@@ -215,7 +211,9 @@ def chat():
             context=context,
             conversation=conversation
         )
-
+        
+        logger.info(f"User Question: {message}")
+        
         options = genai.types.GenerationConfig(temperature=0.7)
         response = model.generate_content(prompt, generation_config=options)
         reply = response.text.strip()
@@ -226,26 +224,19 @@ def chat():
 
         chat_history.append(f"Assistant: {reply}")
 
-        print("=" * 60)
-        print("Assistant:", reply)
-        print("=" * 60)
+        # Step 4 Replacement
+        logger.info(f"Assistant Response: {reply}")
 
         return jsonify({
             "reply": reply
         })
         
-    except Exception as e:
-
-        # ============================================================
-        # Enhanced Error Logging via Traceback
-        # ============================================================
-        print("=" * 60)
-        print("ERROR OCCURRED")
-        traceback.print_exc()
-        print("=" * 60)
+    except Exception:
+        # Step 5 Replacement: Properly log the full traceback and handle errors
+        logger.exception("Error while processing chat request")
 
         return jsonify({
-            "error": "Sorry, something went wrong while processing your request. Please try again later or contact LBSTI at +91 8273817564."
+            "error": "Sorry, something went wrong while processing your request. Please try again later."
         }), 500
 
 
@@ -254,4 +245,4 @@ def chat():
 # ============================================================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

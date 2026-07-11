@@ -1537,7 +1537,34 @@ button:disabled {
     cursor: not-allowed;
 
 }
+.bot-message h2,
+.bot-message h3 {
+    margin: 10px 0 8px;
+    color: #0a4d68;
+}
 
+.bot-message p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.bot-message ul {
+    margin: 8px 0 8px 20px;
+}
+
+.bot-message li {
+    margin-bottom: 4px;
+}
+
+.bot-message strong {
+    color: #1b4332;
+}
+
+.bot-message code {
+    background: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
 
 /* =====================================================
                 END OF FILE

@@ -3,88 +3,77 @@ class ContextBuilder:
     def __init__(self):
         pass
 
-    # ---------------------------------------------
+    # ---------------------------------------------------------
 
     def format_value(self, value):
 
         if value is None:
-            return "N/A"
+            return ""
 
         if isinstance(value, bool):
             return "Yes" if value else "No"
 
         if isinstance(value, list):
-
-            if len(value) == 0:
-                return "N/A"
-
-            return "\n".join(f"• {v}" for v in value)
+            return ", ".join(str(v) for v in value)
 
         if isinstance(value, dict):
-
-            lines = []
-
-            for k, v in value.items():
-                lines.append(f"{k.replace('_',' ').title()}: {v}")
-
-            return "\n".join(lines)
+            return ", ".join(f"{k}: {v}" for k, v in value.items())
 
         return str(value)
 
-    # ---------------------------------------------
+    # ---------------------------------------------------------
 
     def build_record(self, record):
 
+        fields = record.get("fields", {})
+
         lines = []
 
-        lines.append(f"===== {record['section'].upper()} =====")
+        lines.append(f"SECTION: {record['section'].title()}")
+        lines.append(f"TITLE: {record['title']}")
 
-        lines.append("")
+        important_order = [
 
-        lines.append(f"Title: {record['title']}")
+            "name",
+            "category",
+            "duration",
+            "level",
+            "mode",
+            "description",
+            "skills",
+            "technologies",
+            "career_opportunities",
+            "certificate",
+            "placement_support",
+            "phone",
+            "email",
+            "address"
 
-        lines.append("")
+        ]
 
-        fields = record["fields"]
+        for field in important_order:
 
-        if isinstance(fields, dict):
+            if field in fields:
 
-            SKIP_FIELDS = {
-                "id",
-                "slug",
-                "keywords",
-                "search_keywords"
-            }
+                value = self.format_value(fields[field])
 
-            for key, value in fields.items():
-
-                if key in SKIP_FIELDS:
-                    continue
-
-                key = key.replace("_", " ").title()
-
-                lines.append(f"{key}:")
-
-                lines.append(self.format_value(value))
-
-                lines.append("")
+                if value:
+                    label = field.replace("_", " ").title()
+                    lines.append(f"{label}: {value}")
 
         return "\n".join(lines)
 
-    # ---------------------------------------------
+    # ---------------------------------------------------------
 
     def build(self, records):
 
         if not records:
             return "No relevant knowledge found."
 
-        context = []
-
-        for record in records:
-
-            context.append(self.build_record(record))
-
-        return "\n\n".join(context)
+        return "\n\n-----------------------------\n\n".join(
+            self.build_record(record)
+            for record in records
+        )
 
 
 context_builder = ContextBuilder()
