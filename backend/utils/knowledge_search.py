@@ -1,5 +1,5 @@
 import re
-from utils.knowledge_loader import knowledge_loader
+from backend.utils.knowledge_loader import knowledge_loader
 
 
 class KnowledgeSearch:

@@ -1,4 +1,4 @@
-from utils.knowledge_loader import knowledge_loader
+from  backend.utils.knowledge_loader import knowledge_loader
 
 print("\n" + "=" * 60)
 print("SECTION SUMMARY")

@@ -42,3 +42,5 @@ Question
 ---------------------------
 Answer
 """
+    
+prompt_builder = PromptBuilder()

@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 import os
 import logging
 from collections import deque
-from utils.prompt_builder import prompt_builder
-from utils.query_router import query_router
-from utils.knowledge_search import knowledge_search
-from utils.context_builder import context_builder
+from backend.utils.query_router import query_router
+from backend.utils.knowledge_search import knowledge_search
+from backend.utils.context_builder import context_builder
+from backend.utils.knowledge_loader import knowledge_loader
 
 # ============================================================
 # Configure Logging
@@ -25,10 +25,13 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
+# Fixed: Fetch the API key first so the variable is defined before we print it
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     raise ValueError("GEMINI_API_KEY not found.")
+
+print("API Key Loaded:", api_key[:10] + "...")
 
 genai.configure(api_key=api_key)
 

@@ -1,4 +1,4 @@
-from utils.knowledge_search import knowledge_search
+from  backend.utils.knowledge_search import knowledge_search
 from utils.context_builder import context_builder
 
 query = "Python course"
