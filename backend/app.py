@@ -1,5 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
+# from google import genai
+# client = genai.Client()
+# # ... use client.models.generate_content() later in your code
+
 from dotenv import load_dotenv
 import os
 import logging
