@@ -249,12 +249,20 @@ def chat():
             "reply": reply
         })
         
-    except Exception:
-        # Step 5 Replacement: Properly log the full traceback and handle errors
-        logger.exception("Error while processing chat request")
+    except Exception as e:
+
+        if "429" in str(e) or "ResourceExhausted" in str(e):
+            return jsonify({
+                "reply": (
+                    "⚠️ The AI service has reached its free usage limit.\n\n"
+                    "Please try again after a few minutes or tomorrow."
+                )
+            })
+
+        logger.exception(e)
 
         return jsonify({
-            "error": "Sorry, something went wrong while processing your request. Please try again later."
+            "reply": "Something went wrong."
         }), 500
 
 
