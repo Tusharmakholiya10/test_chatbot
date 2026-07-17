@@ -21,6 +21,9 @@ RULES:
 9. Never use long paragraphs.
 10. Highlight important information in bold.
 
+
+
+
 ---------------------------
 Conversation
 

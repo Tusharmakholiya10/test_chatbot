@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <title>LBS Pithoragarh AI Assistant</title>
 
     <!-- Google Fonts -->
@@ -27,336 +26,133 @@
     <div class="page-container">
 
         <!-- ================= HEADER ================= -->
-
         <header class="top-header">
-
             <div class="header-left">
-
                 <img src="{{ url_for('static', filename='images/lbs_logo.png') }}"
                     class="logo"
                     alt="LBS Logo">
-                
                 <div>
-
                     <h1>LBS Pithoragarh</h1>
-
                     <span>AI Admission Assistant</span>
-
                 </div>
-
             </div>
-
             <div class="header-right">
-
-                <button
-                    class="clear-btn"
-                    onclick="clearChat()">
-
+                <button class="clear-btn" onclick="clearChat()">
                     <i class="fa-solid fa-trash"></i>
-
                     Clear Chat
-
                 </button>
-
             </div>
-
         </header>
 
         <!-- ================= HERO ================= -->
-
         <section class="hero-section">
-
             <div class="hero-icon">
-
                 <i class="fa-solid fa-robot"></i>
-
             </div>
-
             <div class="hero-text">
-
-                <h2 id="greeting">
-                    Good Evening 👋
-                </h2>
-
-                <p>
-
-                    Welcome to the official AI Assistant of
-
-                    <strong>
-                        LBS Pithoragarh
-                    </strong>
-
-                </p>
-
-                <span>
-
-                    Ask me anything about admissions,
-                    fees,  courses,
-                    scholarships and more.
-
-                </span>
-
+                <h2 id="greeting">Good Evening 👋</h2>
+                <p>Welcome to the official AI Assistant of <strong>LBS Pithoragarh</strong></p>
+                <span>Ask me anything about admissions, fees, courses, scholarships and more.</span>
             </div>
-
         </section>
 
         <!-- ================= MAIN ================= -->
-
         <main class="chat-wrapper">
-
             <!-- Left Side -->
-
             <aside class="sidebar">
-
                 <div class="sidebar-card">
-
-                    <h3>
-
-                        Quick Questions
-
-                    </h3>
-
-                    <button class="side-btn"
-                        onclick="askSuggestion('What courses are available?')">
-
-                        📚 Courses Offered
-
-                    </button>
-
-                    <button class="side-btn"
-                        onclick="askSuggestion('Tell me the fee structure.')">
-
-                        💰 Fee Structure
-
-                    </button>
-
-                    <button class="side-btn"
-                        onclick="askSuggestion('What is the admission process?')">
-
-                        📝 Admission Process
-
-                    </button>
-<!-- 
-                    <button class="side-btn"
-                        onclick="askSuggestion('Hostel facilities')">
-
-                        🏠 Hostel
-
-                    </button> -->
-<!-- 
-                    <button class="side-btn"
-                        onclick="askSuggestion('Scholarships')">
-
-                        🎓 Scholarships
-
-                    </button> -->
-
-                    <button class="side-btn"
-                        onclick="askSuggestion('Contact details')">
-
-                        📞 Contact
-
-                    </button>
-
+                    <h3>Quick Questions</h3>
+                    <button class="side-btn" onclick="askSuggestion('What courses are available?')">📚 Courses Offered</button>
+                    <button class="side-btn" onclick="askSuggestion('Tell me the fee structure.')">💰 Fee Structure</button>
+                    <button class="side-btn" onclick="askSuggestion('What is the admission process?')">📝 Admission Process</button>
+                    <button class="side-btn" onclick="askSuggestion('Contact details')">📞 Contact</button>
                 </div>
-
             </aside>
 
             <!-- Chat -->
-
             <section class="chat-section">
-
-                <div
-                    class="chat-card">
-
+                <div class="chat-card">
                     <!-- Chat Header -->
-
                     <div class="chat-title">
-
                         <div>
-
                             <i class="fa-solid fa-comments"></i>
-
                             Conversation
-
                         </div>
-
-                        <div class="status">
-
-                                ● Online
-
-                        </div>
-
+                        <div class="status">● Online</div>
                     </div>
 
                     <!-- Messages -->
-
-                    <div
-                        id="chat-box"
-                        class="chat-box">
-
+                    <div id="chat-box" class="chat-box">
                         <div class="bot-message message">
-
                             <div class="avatar bot-avatar">
-
                                 <i class="fa-solid fa-robot"></i>
-
                             </div>
-
                             <div class="bubble">
-
-                                <div class="sender">
-
-                                    AI Assistant
-
-                                </div>
-
-                                <p>
-
-                                    Hello 👋
-
-                                    I'm your LBS Pithoragarh AI Assistant.
-
-                                </p>
-
-                                <p>
-
-                                    Feel free to ask me anything about
-
-                                    admissions,
-
-                                    fee structure,
-
-                                    available courses,
-
-                                    hostel facilities,
-
-                                    placements,
-
-                                    scholarships,
-
-                                    or contact details.
-
-                                </p>
-
+                                <div class="sender">AI Assistant</div>
+                                <p>Hello 👋 I'm your LBS Pithoragarh AI Assistant.</p>
+                                <p>Feel free to ask me anything about admissions, fee structure, available courses, hostel facilities, placements, scholarships, or contact details.</p>
                             </div>
-
                         </div>
-
                     </div>
 
                     <!-- Typing -->
-
-                    <div
-                        id="typing-indicator"
-                        class="typing-indicator">
-
+                    <div id="typing-indicator" class="typing-indicator">
                         <div class="avatar bot-avatar">
-
                             <i class="fa-solid fa-robot"></i>
-
                         </div>
-
                         <div class="typing-bubble">
-
                             <span></span>
-
                             <span></span>
-
                             <span></span>
-
                         </div>
-
                     </div>
 
                     <!-- Suggestion Chips -->
-
-                    <div
-                        id="suggestions-container"
-                        class="suggestion-container">
-
+                    <div id="suggestions-container" class="suggestion-container">
                         <!-- Flask fills dynamically -->
-                    
                     </div>
 
                     <!-- Input -->
-
                     <div class="input-container">
-
                         <div class="input-box">
-
                             <i class="fa-regular fa-pen-to-square"></i>
-
-                            <input
-                                id="message"
-                                type="text"
-                                placeholder="Ask anything about LBS Pithoragarh..."
-                                autocomplete="off">
-
-                            <button
-                                id="send-btn"
-                                onclick="sendMessage()">
-
+                            <input id="message" type="text" placeholder="Ask anything about LBS Pithoragarh..." autocomplete="off">
+                            <button id="send-btn" onclick="sendMessage()">
                                 <i class="fa-solid fa-paper-plane"></i>
-
                             </button>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
-
         </main>
-
     </div>
 
     <!-- Footer -->
-
     <footer>
-
         © 2026 LBS Pithoragarh AI Assistant
-
-        <span>
-
-            Powered by Flask & AI
-
-        </span>
-
+        <span>Powered by Flask & AI</span>
     </footer>
 
-    <!-- Script -->
+    <!-- Scripts Section (Ordered Correctly) -->
+    <!-- 1. Third-party dependencies first -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+    <!-- 2. Your custom application script that depends on 'marked' -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
+    <!-- 3. Page specific inline handlers -->
     <script>
-
-        document
-            .getElementById("message")
-            .addEventListener("keypress", function (event) {
-
-                if (event.key === "Enter") {
-
-                    sendMessage();
-
-                }
-
-            });
+        document.getElementById("message").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
 
         function askSuggestion(text) {
-
-            document
-                .getElementById("message")
-                .value = text;
-
+            document.getElementById("message").value = text;
             sendMessage();
-
         }
-
     </script>
 
 </body>
-
 </html>

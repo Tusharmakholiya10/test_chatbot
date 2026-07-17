@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify, render_template
-import google.generativeai as genai
+# import google.generativeai as genai
 # from google import genai
 # client = genai.Client()
 # # ... use client.models.generate_content() later in your code
-
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 import os
 import logging
@@ -37,14 +38,12 @@ if not api_key:
 
 print("API Key Loaded:", api_key[:10] + "...")
 
-genai.configure(api_key=api_key)
-
-model = genai.GenerativeModel("gemini-2.5-flash")
-
+client = genai.Client(api_key=api_key)
 
 # ============================================================
 # Flask App
 # ============================================================
+
 
 app = Flask(__name__)
 
@@ -67,6 +66,10 @@ chat_history = deque(maxlen=10)
 def home():
     return render_template("index.html")
 
+
+@app.route("/test")
+def test():
+    return "Backend working!"
 
 # ============================================================
 # Health Check
@@ -221,8 +224,16 @@ def chat():
         
         logger.info(f"User Question: {message}")
         
-        options = genai.types.GenerationConfig(temperature=0.7)
-        response = model.generate_content(prompt, generation_config=options)
+        # options = genai.types.GenerationConfig(temperature=0.7)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=0.3,
+                max_output_tokens=700,
+            ),
+        )
+
         reply = response.text.strip()
 
         # ============================================================

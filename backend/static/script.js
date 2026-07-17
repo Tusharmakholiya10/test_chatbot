@@ -107,6 +107,9 @@ function addBotMessage(text) {
     const wrapper = document.createElement("div");
 
     wrapper.className = "bot-message message";
+    
+    // Parse the Markdown into rich HTML elements
+    const parsedHTML = marked.parse(text);
 
     wrapper.innerHTML = `
 
@@ -124,7 +127,7 @@ function addBotMessage(text) {
 
             </div>
 
-           <p>${escapeHTML(text)}</p>
+           <div class="markdown-content">${parsedHTML}</div>
 
             <div class="message-time">
 
