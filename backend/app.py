@@ -57,7 +57,38 @@ app = app
 
 chat_history = deque(maxlen=10)
 
+import random
 
+GREETINGS = {
+    "hi": [
+        "👋 Hello! Welcome to the LBS AI Assistant.\n\nHow can I help you today?",
+        "Hi! 😊 I'm the LBS AI Assistant. Ask me anything about courses, admissions, faculty, placements, or contact details."
+    ],
+    "hello": [
+        "Hello! 👋 Welcome to Lal Bahadur Shastri Training Institute.\n\nHow may I assist you today?"
+    ],
+    "hey": [
+        "Hey! 😊 What would you like to know about LBS?"
+    ],
+    "good morning": [
+        "🌞 Good Morning! Welcome to LBS AI Assistant.\nHow can I help you today?"
+    ],
+    "good afternoon": [
+        "☀️ Good Afternoon! How can I assist you today?"
+    ],
+    "good evening": [
+        "🌙 Good Evening! How can I help you today?"
+    ]
+}
+SMALL_TALK = {
+    "how are you": "😊 I'm doing great! Thank you for asking.\n\nHow can I help you with information about LBS today?",
+    "who are you": "🤖 I'm the official AI Assistant of Lal Bahadur Shastri Training Institute (LBS). I can help you with courses, admissions, faculty, placements, contact details, and more.",
+    "thanks": "😊 You're welcome! Feel free to ask if you need anything else.",
+    "thank you": "You're most welcome! Have a great day! 🎉",
+    "bye": "👋 Goodbye! Have a wonderful day. Feel free to visit again.",
+    "goodbye": "👋 Goodbye! Best wishes from LBS!"
+}
+    
 # ============================================================
 # Home Route
 # ============================================================
@@ -140,12 +171,22 @@ def chat():
         }), 400
 
     message = data.get("message", "").strip()
+    message_lower = message.lower()
 
+    for greeting, replies in GREETINGS.items():
+        if message_lower == greeting:
+            return jsonify({
+                "reply": random.choice(replies)
+            })
     if not message:
         return jsonify({
             "error": "Message cannot be empty."
         }), 400
-
+    for key, reply in SMALL_TALK.items():
+        if message_lower == key:
+            return jsonify({
+                "reply": reply
+            })
     try:
         # ============================================================
         # Route the query & Search Knowledge Base (With Second Chance Fallback)
