@@ -45,7 +45,11 @@ client = genai.Client(api_key=api_key)
 # ============================================================
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="templates",
+    static_folder="static"
+)
 
 # Required for Vercel
 app = app
